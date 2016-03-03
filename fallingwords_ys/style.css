@@ -66,3 +66,7 @@ span .explode {
     transform: scale(3) rotate(10deg);
 }
 /*explosion code taken from here http://stackoverflow.com/questions/16512372/exploding-animation-using-css3*/
+
+.scoredisplay {
+  text-align: center;
+}
