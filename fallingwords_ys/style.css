@@ -55,6 +55,12 @@ h4 {
     /*top: 20px;
     right: 400px*/
 }
+
+span {
+  font-size: 1.5em;
+  font-family: 'Fira Mono', sans-serif;
+}
+
 span .explode {
     opacity: 0;
     transform: scale(3) rotate(10deg);
