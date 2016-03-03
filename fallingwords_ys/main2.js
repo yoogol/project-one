@@ -1,6 +1,7 @@
 console.log("JS has loaded...")
 
 var gameField = document.querySelector('.gamefield');
+var userInputBox = document.querySelector('.useranswer');
 
 // create the new word
 function FactoryOfWords(currentWord) {
@@ -26,7 +27,7 @@ var gameMechanics = {
     this.generateWordPosition(newWordObject);
   },
   generateWordPosition: function(newWordObject) {
-    newWordObject.wordLeftPosition = Math.floor(Math.random() * (845 - 15)) + 15; // generate number that will determine word position
+    newWordObject.wordLeftPosition = Math.floor(Math.random() * (800 - 25)) + 15; // generate number that will determine word position
     console.log("Word position is " + newWordObject.wordLeftPosition);
     this.generateWordNode(newWordObject);
   },
@@ -50,7 +51,7 @@ var gameMechanics = {
     var top = -10;
     var fallDown = setInterval(function() {
     that.style.top = top + "px";
-    console.log("moving down by " + top + "px");
+    // console.log("moving down by " + top + "px");
     if (top <= 540) {
       top += 1;
     } else {
@@ -62,6 +63,22 @@ var gameMechanics = {
   }
 };
 
+var player = {
+  typedWord: null,
+  score: null,
+  updateScore: function() {
+    if (newWordObject )
+
+  }
+
+}
+
 var playgame = function() {
-    gameMechanics.generateCurrentWord();
+  userInputBox.addEventListener("keypress", function(event) {
+    var key = event.which;
+    if (key === 13) {
+      console.log(this.value);
+      player.typedWord = userInputBox.value;
+  }});
+  gameMechanics.generateCurrentWord();
 }
