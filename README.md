@@ -1,9 +1,8 @@
 Yulia Shea
 
 Improvements:
-- find how to automatically determine an element width to avoid words going out of range
 - add animation to words: exploding, changing colors, blinking etc.
-  - change word color to red when attempt failed
+  - change word color to red when attempt failed [x]
   - make the word pop when attempt succeeded
   - make the word explode when it hits the ground
 - style game over/you win
@@ -22,3 +21,5 @@ DONE
 - words go over the field [x]
 - let user make couple of mistakes in the beginning [x]
 - style scoreboard [x]
+- find how to automatically determine an element width to avoid words going out of range [x]
+- fix start button on the second run [x]

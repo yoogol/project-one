@@ -11,21 +11,23 @@ var typedWordDisplay = document.querySelector('.placeforword');
 
 var elProperties = {
   wordStringLength: function(string) {
-    var rulerEl = document.querySelector("#ruler"); // a technical element necessary to calculate the px length of each falling word to ensure it doesn't go outside of the screen
+    return 48 * string.length; // 48 is the width of the font I chose
+    // var rulerEl = document.querySelector("#ruler"); // a technical element necessary to calculate the px length of each falling word to ensure it doesn't go outside of the screen
     // console.log("Ruler:");
     // console.log(rulerEl);
-    rulerEl.innerText = string;
-    return rulerEl.offsetWidth;
+    // rulerEl.innerText = string;
+    // return rulerEl.offsetWidth;
   },
   // stringLength: this.wordStringLength("hello"),
-  gameFieldHeight: gameField.clientHeight,
-  gameFieldWidth: gameField.clientWidth,
+  gameFieldHeight: gameField.offsetHeight,
+  gameFieldWidth: gameField.offsetWidth,
   gameFieldLeftProp: 0
 }
 // code for ruler taked from https://blog.mastykarz.nl/measuring-the-length-of-a-string-in-pixels-using-javascript/
 
 // objects with properties and methods necessary to play the game
 var gameMechanics = {
+  gameInProgress: false,
   randomizeWords: function() {
     var i = wordArray.length;
     while (i > 0) {
@@ -71,7 +73,7 @@ var gameMechanics = {
   // pick random position for the word to appear on the screen on x-axis
   generateWordPosition: function() {
     // console.log("running generateWordPosition");
-    this.wordLeftPosition = Math.floor(Math.random() * ((elProperties.gameFieldWidth - elProperties.wordStringLength(this.currentWord)) - (elProperties.gameFieldLeftProp + elProperties.wordStringLength(this.currentWord))) + (elProperties.gameFieldLeftProp + elProperties.wordStringLength(this.currentWord))); // generate random number that will determine word position
+    this.wordLeftPosition = Math.floor(Math.random() * ((elProperties.gameFieldWidth - elProperties.wordStringLength(this.currentWord)) - (elProperties.gameFieldLeftProp + elProperties.wordStringLength(this.currentWord))) + (elProperties.gameFieldLeftProp + elProperties.wordStringLength(this.currentWord)));; // generate random number that will determine word position
     console.log("Word position is ");
     console.log(this.wordLeftPosition);
     this.wordNode.style.left = this.wordLeftPosition + "px";
@@ -84,7 +86,7 @@ var gameMechanics = {
     gameField.appendChild(this.wordNode);
     this.moveWordDown(); // start moving the word down
   },
-  movingSpeed: 50,
+  movingSpeed: 10,
   // function to move the word down
   moveWordDown: function() {
     // console.log("running moveWordDown");
@@ -100,9 +102,9 @@ var gameMechanics = {
       that.youWinMessage();
       window.clearInterval(fallDown);
     } else { // if no, move the word down
-      if (top < elProperties.gameFieldHeight-18 && player.youGotIt === false) { // make sure the word has not reached the end of the screen, the user has not picked the right word
+      if (top < elProperties.gameFieldHeight - 24 && player.youGotIt === false) { // make sure the word has not reached the end of the screen, the user has not picked the right word
         top += 1;
-      } else if (top === elProperties.gameFieldHeight-18) { // see if the word has reached the end: if yes, reduce the score
+      } else if (top === elProperties.gameFieldHeight - 24) { // see if the word has reached the end: if yes, reduce the score
         top += 1;
         player.wrongAnswer();
       }
@@ -164,12 +166,14 @@ var gameMechanics = {
   gameOver: false,
   gameOverMessage: function() {
     // console.log("running gameOverMessage");
+    this.gameInProgress = false;
     gameField.innerHTML = "<h1 style=text-align:center;color:white>Game Over</h1>";
 
   },
   youWin: false,
   youWinMessage: function() {
     // console.log("running youWinMessage");
+    this.gameInProgress = false;
     gameField.innerHTML = "<h1 style=text-align:center;color:white>You win!</h1>";
   },
   resetGame: function() {
@@ -194,6 +198,14 @@ var player = {
     // console.log("Wrong: updating score");
       this.score -= 5;
       this.updateScoreNode();
+      console.log("adding color to wrong answer");
+
+      gameMechanics.wordNode.classList.add("wrong");
+      console.log(gameMechanics.wordNode.classList);
+      console.log("removing color");
+      setTimeout(function() { gameMechanics.wordNode.classList.remove("wrong")},500);
+      console.log(gameMechanics.wordNode.classList);
+
       // console.log("user score is " + this.score);
     },
   correctAnswer: function() {
@@ -213,7 +225,7 @@ var player = {
     //     scoreDisplay.style.color = "green";
     //   }
     } else {
-      scoreDisplay.innerText = "YOU LOST";
+      scoreDisplay.innerHTML = "<p style=color:purple>YOU LOST :(</p>";
     }
   },
   resetPlayer: function() {
@@ -226,11 +238,16 @@ var player = {
 }
 
 startButton.addEventListener('click', function(event) {
-    gameMechanics.randomizeWords();
-    gameMechanics.resetGame();
-    player.resetPlayer();
-    gameMechanics.generateCurrentWord();
-    userInputBox.focus();
+    if (gameMechanics.gameInProgress === false) {
+      gameMechanics.gameInProgress = true;
+      gameMechanics.randomizeWords();
+      gameMechanics.resetGame();
+      player.resetPlayer();
+      gameMechanics.generateCurrentWord();
+      userInputBox.focus();
+    } else {
+      console.log("Game is in progress");
+    }
 });
 
 userInputBox.addEventListener("keypress", function(event) {
@@ -251,6 +268,7 @@ userInputBox.addEventListener("keypress", function(event) {
 
 stopButton.addEventListener('click', function(event) {
   // console.log("Game Stopped");
+    gameMechanics.gameInProgress = false;
     gameMechanics.gameOver = true;
     gameMechanics.gameOverMessage();
 });
