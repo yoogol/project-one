@@ -49,7 +49,7 @@ var gameMechanics = {
       this.youWinMessage();
     } else { // if not, set
       player.youGotIt = false; // reset the word win status
-      this.currentWord = wordArray[0]; // grabbing first word of the array and placing it into current word
+      this.currentWord = wordArray[0].toLowerCase(); // grabbing first word of the array and placing it into current word
       wordArray.push(wordArray.shift()); // moving first word in the array to become last (shuffling)
       this.generateWordNode(); // initiate creation of the node element for the word
     }

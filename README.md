@@ -4,9 +4,6 @@ Improvements:
 - add animation to words: exploding, changing colors, blinking etc.
   - make the word explode when it hits the ground
 - fix flickering
-
-- update words so they don't have mistakes
-- make the typed word and status appear on the scoreboard [x]
 - greeting pop-up
 - add ability to create additional players
 - add sounds
@@ -26,3 +23,5 @@ DONE
 - change word color to red when attempt failed [x]
 - make the word pop when attempt succeeded [x]
 - style game over/you win [x]
+- update words so they don't have mistakes [x]
+- make the typed word and status appear on the scoreboard [x]
