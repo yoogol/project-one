@@ -1,69 +1,43 @@
 html {
   background: black;
-  box-sizing: border-box;
-}
-
-.wrapper {
-
-  min-width: 900px;
-}
-
-.left-column {
-  width: 80%;
-  float:left;
 }
 .gamefield {
-  /*position: absolute;*/
-  float:left;
+  position: absolute;
   top:0px;
-  /*left: 50px;*/
-  /*width: 1010px;*/
-  width: 100%;
-  /*min-width: 700px;*/
+  left: 50px;
+  width: 810px;
   height: 540px;
   background-image: url('img/background.jpg');;
   background-size: cover;
-    z-index: 1;
   /*display: inline-block;*/
   /*position: fixed;*/
 }
 
 .scoreboard {
-  /*position: absolute;*/
-  float:left;
-  /*left: 1060px;*/
+  position: absolute;
+  left: 860px;
   background: cadetblue;
-  /*width: 200px;*/
+  width: 200px;
   height: 610px;
-  width: 20%;
-  /*min-width: 80px;*/
   top: 0px;
-  display: flex;
-  flex-direction: column;
-  /*justify-content: space-around;*/
-  align-items: center;
 }
 
 .userinputform {
-  float:left;
-  /*clear: right;*/
+  position: absolute;
   left: 50px;
-  /*top: 540px;*/
+  top: 540px;
   background: purple;
   height: 70px;
-  width: 100%;
-  /*min-width: 700px;*/
+  width: 810px;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 4;
 }
 
 button {
- margin-top: 40px;
- /*margin-left: 40px;*/
+ margin-top: 10px;
+ margin-left: 40px;
  height: 30px;
- width: 80px;
  font-size: 1.2em;
  /*border-radius: 20%;*/
 }
@@ -94,22 +68,15 @@ span {
   font-size: 1.5em;
   font-family: 'Fira Mono', sans-serif;
   color: white;
-  z-index: 3;
 }
 
 span .explode {
     opacity: 0;
     transform: scale(3) rotate(10deg);
-    z-index: 3;
 }
 /*explosion code taken from here http://stackoverflow.com/questions/16512372/exploding-animation-using-css3*/
 
 .scoredisplay {
   text-align: center;
   margin-top: 90px;
-}
-
-#ruler {
-  visibility: hidden;
-  white-space: nowrap;
 }
