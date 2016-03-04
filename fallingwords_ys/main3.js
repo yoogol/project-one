@@ -5,6 +5,7 @@ var userInputBox = document.querySelector('.useranswer');
 var startButton = document.querySelector('.start');
 var scoreDisplay = document.querySelector('.placeforscore');
 var stopButton = document.querySelector('.stop');
+var typedWordDisplay = document.querySelector('.placeforword');
 
 
 
@@ -130,8 +131,10 @@ var gameMechanics = {
       gameMechanics.abortMoveDown();
       player.correctAnswer();
       player.youGotIt = true; // set word win status to true to remove the word from the field and initiate the new one
+      typedWordDisplay.innerHTML = '<p style="font-size: 1em;color:green">' + player.typedWord + "</p>";
     } else {
       player.wrongAnswer();
+      typedWordDisplay.innerHTML = '<p style="font-size: 1em;color:red">' + player.typedWord + "</p>";
     }
   },
   checkPlayerScore: function() {
@@ -203,9 +206,14 @@ var player = {
   updateScoreNode: function() {
     // console.log("running updateScoreNode");
     if (this.score >= 0) {
-      scoreDisplay.innerText = this.score;
+      scoreDisplay.innerHTML = "<p style=font-family:'Righteous',cursive>" + this.score + "</p>";
+    //   if (this.youGotIt === false) {
+    //     scoreDisplay.style.color = "red";
+    // } else {
+    //     scoreDisplay.style.color = "green";
+    //   }
     } else {
-      scoreDisplay.innerText = "TOO LOW";
+      scoreDisplay.innerText = "YOU LOST";
     }
   },
   resetPlayer: function() {

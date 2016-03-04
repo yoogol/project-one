@@ -1,18 +1,24 @@
 Yulia Shea
 
-Potential improvements:
-
-- add ability to create additional players
-- utilize random word generation API
+Improvements:
 - find how to automatically determine an element width to avoid words going out of range
 - add animation to words: exploding, changing colors, blinking etc.
-- improve styling on score column
+  - change word color to red when attempt failed
+  - make the word pop when attempt succeeded
+  - make the word explode when it hits the ground
+- style game over/you win
+- update words so they don't have mistakes
+- make the typed word and status appear on the scoreboard [x]
+- greeting pop-up
+- add ability to create additional players
+- add sounds
+- utilize random word generation API
+- make the words fall simultaneously
 - convert to a math game
-- api for words
 
+DONE
 
-Bugs:
 - start button doesn't work on the second try [x]
 - words go over the field [x]
 - let user make couple of mistakes in the beginning [x]
-- make the words fall simultaneously
+- style scoreboard [x]

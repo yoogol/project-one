@@ -32,16 +32,16 @@ html {
   /*position: absolute;*/
   float:left;
   /*left: 1060px;*/
-  background: cadetblue;
+  background: skyblue;
   /*width: 200px;*/
   height: 610px;
   width: 20%;
   /*min-width: 80px;*/
   top: 0px;
-  display: flex;
-  flex-direction: column;
+  /*display: flex;
+  flex-direction: column;*/
   /*justify-content: space-around;*/
-  align-items: center;
+  /*align-items: center;*/
 }
 
 .userinputform {
@@ -59,15 +59,34 @@ html {
   z-index: 4;
 }
 
-button {
- margin-top: 40px;
+.buttons {
+  margin: 30px 0 0 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.buttons button {
+ /*margin-top: 40px;*/
  /*margin-left: 40px;*/
- height: 30px;
- width: 80px;
- font-size: 1.2em;
+ height: 40px;
+ width: 100px;
+ font-size: 1.3em;
+ text-align: center;
+ font-family: 'Cutive Mono', monospace;
+ font-weight: bold;
+ background: black;
+ color: white;
  /*border-radius: 20%;*/
 }
 
+
+
+.placeforscore * {
+  font-family: 'Fjalla One', sans-serif;
+  font-weight: bold;
+  font-size: 3em;
+}
 /*.stop {
   position: static;;
   margin-top: 300px;
@@ -97,19 +116,41 @@ span {
   z-index: 3;
 }
 
-span .explode {
+span.wrong {
+  color: red;
+}
+
+span.right {
+  color: green;
+}
+
+span.explode {
     opacity: 0;
     transform: scale(3) rotate(10deg);
     z-index: 3;
 }
+
+
 /*explosion code taken from here http://stackoverflow.com/questions/16512372/exploding-animation-using-css3*/
 
 .scoredisplay {
   text-align: center;
-  margin-top: 90px;
+  margin-top: 30px;
 }
 
 #ruler {
   visibility: hidden;
   white-space: nowrap;
+}
+
+.scoreboard p {
+  text-align: center;
+  font-family: 'Fjalla One', sans-serif;
+  font-weight: bold;
+}
+
+.scoredisplay p {
+  font-family: 'Fjalla One', sans-serif;
+  font-weight: bold;
+  font-size: 1.5em;
 }
