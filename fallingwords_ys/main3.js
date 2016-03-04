@@ -11,7 +11,7 @@ var typedWordDisplay = document.querySelector('.placeforword');
 
 var elProperties = {
   wordStringLength: function(string) {
-    return 48 * string.length; // 48 is the width of the font I chose
+    return 24 * string.length; // 48 is the width of the font I chose
     // var rulerEl = document.querySelector("#ruler"); // a technical element necessary to calculate the px length of each falling word to ensure it doesn't go outside of the screen
     // console.log("Ruler:");
     // console.log(rulerEl);
@@ -73,7 +73,7 @@ var gameMechanics = {
   // pick random position for the word to appear on the screen on x-axis
   generateWordPosition: function() {
     // console.log("running generateWordPosition");
-    this.wordLeftPosition = Math.floor(Math.random() * ((elProperties.gameFieldWidth - elProperties.wordStringLength(this.currentWord)) - (elProperties.gameFieldLeftProp + elProperties.wordStringLength(this.currentWord))) + (elProperties.gameFieldLeftProp + elProperties.wordStringLength(this.currentWord)));; // generate random number that will determine word position
+    this.wordLeftPosition = Math.floor(Math.random() * ((elProperties.gameFieldWidth - elProperties.wordStringLength(this.currentWord)) - elProperties.gameFieldLeftProp) + elProperties.gameFieldLeftProp);; // generate random number that will determine word position
     console.log("Word position is ");
     console.log(this.wordLeftPosition);
     this.wordNode.style.left = this.wordLeftPosition + "px";
@@ -86,7 +86,7 @@ var gameMechanics = {
     gameField.appendChild(this.wordNode);
     this.moveWordDown(); // start moving the word down
   },
-  movingSpeed: 10,
+  movingSpeed: 50,
   // function to move the word down
   moveWordDown: function() {
     // console.log("running moveWordDown");
@@ -122,28 +122,43 @@ var gameMechanics = {
   },
   abortMoveDown: function() {
     // console.log("running abortMoveDown");
+    // console.log("user score is " + this.score);
     this.wordNode.remove();
     this.wordTopPosition = -20;
-    // this.generateCurrentWord();
   },
   checkresult: function() {
     // console.log("running checkresult");
     // console.log("checking result - user typed " + player.typedWord);
     if (player.typedWord === gameMechanics.currentWord) {
-      gameMechanics.abortMoveDown();
-      player.correctAnswer();
-      player.youGotIt = true; // set word win status to true to remove the word from the field and initiate the new one
-      typedWordDisplay.innerHTML = '<p style="font-size: 1em;color:green">' + player.typedWord + "</p>";
+      gameMechanics.wordNode.classList.add("right");
+      console.log(this.wordNode.classList);
+      console.log("adding styling to correct answer");
+      setTimeout(function() {
+        gameMechanics.wordNode.classList.remove("right");
+        gameMechanics.abortMoveDown();
+        player.correctAnswer();
+        player.youGotIt = true; // set word win status to true to remove the word from the field and initiate the new one
+        typedWordDisplay.innerHTML = '<p style="font-size: 1em;color:green">' + player.typedWord + "</p>";
+      },300)
+
     } else {
+      console.log("adding color to wrong answer");
+
+      gameMechanics.wordNode.classList.add("wrong");
+      console.log(gameMechanics.wordNode.classList);
+      console.log("removing color");
+      setTimeout(function() { gameMechanics.wordNode.classList.remove("wrong")},500);
+      console.log(gameMechanics.wordNode.classList);
       player.wrongAnswer();
       typedWordDisplay.innerHTML = '<p style="font-size: 1em;color:red">' + player.typedWord + "</p>";
     }
   },
+  winningScore: 150,
   checkPlayerScore: function() {
     // console.log("running checkPlayerScore");
     if (player.score < 0 || this.gameOver === true) {
       this.gameOver = true;
-    } else if (player.score > 150) {
+    } else if (player.score > this.winningScore) {
       // console.log("You won!");
       gameMechanics.youWin = true;
       gameMechanics.youWinMessage();
@@ -167,14 +182,14 @@ var gameMechanics = {
   gameOverMessage: function() {
     // console.log("running gameOverMessage");
     this.gameInProgress = false;
-    gameField.innerHTML = "<h1 style=text-align:center;color:white>Game Over</h1>";
+    gameField.innerHTML = "<h1 class='gameover'>Game Over</h1><h3 class='gameover2'>Better luck next time!</h3>";
 
   },
   youWin: false,
   youWinMessage: function() {
     // console.log("running youWinMessage");
     this.gameInProgress = false;
-    gameField.innerHTML = "<h1 style=text-align:center;color:white>You win!</h1>";
+    gameField.innerHTML = "<h1 class='youwin'>Hooray!</h1><h3 class='youwin2'>You are an excellent typer!</h3><h4 class='youwin3'>(You'll make a good secretary)</h4>";
   },
   resetGame: function() {
     // console.log("running resetGame");
@@ -194,26 +209,19 @@ var player = {
   score: 0,
   youGotIt: false,
   wrongAnswer: function() {
-    // console.log("running wrongAnswer");
-    // console.log("Wrong: updating score");
-      this.score -= 5;
-      this.updateScoreNode();
-      console.log("adding color to wrong answer");
+  // console.log("running wrongAnswer");
+  // console.log("Wrong: updating score");
+    this.score -= 5;
+    this.updateScoreNode();
 
-      gameMechanics.wordNode.classList.add("wrong");
-      console.log(gameMechanics.wordNode.classList);
-      console.log("removing color");
-      setTimeout(function() { gameMechanics.wordNode.classList.remove("wrong")},500);
-      console.log(gameMechanics.wordNode.classList);
-
-      // console.log("user score is " + this.score);
+    // console.log("user score is " + this.score);
     },
   correctAnswer: function() {
     // console.log("running correctAnswer");
     // console.log("Correct: updating score");
     this.score += 5;
     this.updateScoreNode();
-    // console.log("user score is " + this.score);
+
   },
   updateScoreNode: function() {
     // console.log("running updateScoreNode");
