@@ -1,10 +1,14 @@
+html {
+  background: black;
+}
 .gamefield {
   position: absolute;
   top:0px;
   left: 50px;
   width: 810px;
   height: 540px;
-  background: lightgreen;
+  background-image: url('img/background.jpg');;
+  background-size: cover;
   /*display: inline-block;*/
   /*position: fixed;*/
 }
@@ -12,7 +16,7 @@
 .scoreboard {
   position: absolute;
   left: 860px;
-  background: grey;
+  background: cadetblue;
   width: 200px;
   height: 610px;
   top: 0px;
@@ -38,6 +42,10 @@ button {
  /*border-radius: 20%;*/
 }
 
+/*.stop {
+  position: static;;
+  margin-top: 300px;
+}*/
 h4 {
   text-align: center;
 }
@@ -59,6 +67,7 @@ h4 {
 span {
   font-size: 1.5em;
   font-family: 'Fira Mono', sans-serif;
+  color: white;
 }
 
 span .explode {
@@ -69,4 +78,5 @@ span .explode {
 
 .scoredisplay {
   text-align: center;
+  margin-top: 90px;
 }
