@@ -3,7 +3,8 @@ Yulia Shea
 Improvements:
 - add animation to words: exploding, changing colors, blinking etc.
   - make the word explode when it hits the ground
-- fix flickering
+- add word visual for when the answer is correct and fix flickering
+
 - greeting pop-up
 - add ability to create additional players
 - add sounds

@@ -3,6 +3,27 @@ html {
   box-sizing: border-box;
 }
 
+
+.greeting {
+  width: 50%;
+  background: #232B65;
+  position: absolute;
+  margin: 10% 20% ;
+  transition: opacity 900ms;
+  border-radius: 3em/3em;
+  text-align: center;
+  color: white;
+  font-family: 'Alegreya Sans', sans-serif;
+  font-size: 1rem;
+}
+
+
+.greeting li{
+  text-align: left;
+  margin-left: 10%;
+  font-size: 1rem;
+}
+
 .wrapper {
   margin-top: -20px;
   background: lightblue;
