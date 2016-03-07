@@ -8,7 +8,7 @@ html {
   width: 50%;
   background: #232B65;
   position: absolute;
-  margin: 10% 20% ;
+  margin: 7% 17% ;
   transition: opacity 900ms;
   border-radius: 3em/3em;
   text-align: center;
@@ -49,6 +49,8 @@ html {
     z-index: 1;
   /*display: inline-block;*/
   /*position: fixed;*/
+  color: white;
+  text-align: center;
 }
 
 .scoreboard {
@@ -167,10 +169,11 @@ span {
   font-family: 'Fira Mono', sans-serif;
 }
 
-.scoreboard p {
+.scoreboard p, .scoreboard span {
   text-align: center;
   font-family: 'Fjalla One', sans-serif;
   font-weight: bold;
+  color: black;
 }
 
 .scoredisplay p {
@@ -179,12 +182,12 @@ span {
   font-size: 1.5em;
 }
 
-.gameover, .youwin {
+.gameover, .youwin, .gameover p, .youwin p {
   margin-top: 200px;
   font-size: 4em;
   text-shadow: 2px 2px 2px black;
   text-align:center;
-  color:white
+  color:white;
 }
 .gameover2, .youwin2, .youwin3 {
   margin-top: 10px;

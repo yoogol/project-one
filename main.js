@@ -7,6 +7,9 @@ var scoreDisplay = document.querySelector('.placeforscore');
 var stopButton = document.querySelector('.stop');
 var typedWordDisplay = document.querySelector('.placeforword');
 var gameBody = document.querySelector('body');
+var submittedNameNode = document.createElement('span');
+var placeForName = document.querySelector('.nameHere');
+var gameGreeting = document.createElement('div');
 
 
 // object to keep track of size of elements
@@ -30,6 +33,7 @@ var gameMechanics = {
   winningScore: 150,
   gameOver: false,
   youWin: false,
+  // randomize word array
   randomizeWords: function() {
     var i = wordArray.length;
     while (i > 0) {
@@ -74,7 +78,7 @@ var gameMechanics = {
     gameField.appendChild(this.wordNode);
     this.moveWordDown(); // start moving the word down
   },
-  // function to move the word down
+  // move the word down
   moveWordDown: function() {
     that = this; // prevent this hoisting
     var top = this.wordTopPosition; // set the initial position of the word to -20
@@ -98,7 +102,6 @@ var gameMechanics = {
         top += 1;
         player.wrongAnswer();
       } else { // if it's passed the end of the screen and/or if the youGotIt is true,
-        // that.wordNode.classList.add('explode');
         window.clearInterval(fallDown);
         that.wordNode.remove();
         setTimeout(function () {
@@ -108,11 +111,10 @@ var gameMechanics = {
     }
   }, that.movingSpeed);
   },
+  // check whether the user typer the correce word
   checkresult: function() {
     if (player.typedWord === gameMechanics.currentWord) {
       gameMechanics.wordNode.classList.add("right");
-      // console.log(this.wordNode.classList);
-      // console.log("adding styling to correct answer");
       // set word win status to true to remove the word from the field and initiate the new one
       player.youGotIt = true;
       player.correctAnswer();
@@ -133,11 +135,9 @@ var gameMechanics = {
     }
   },
   checkPlayerScore: function() {
-    // console.log("running checkPlayerScore");
     if (player.score < 0 || this.gameOver === true) {
       this.gameOver = true;
     } else if (player.score > this.winningScore) {
-      // console.log("You won!");
       gameMechanics.youWin = true;
       gameMechanics.youWinMessage();
     } else if (player.score > 90) {
@@ -157,17 +157,32 @@ var gameMechanics = {
     }
   },
   gameOverMessage: function() {
-    // console.log("running gameOverMessage");
+    console.log("running gameOverMessage");
     this.gameInProgress = false;
-    gameField.innerHTML = "<h1 class='gameover'>Game Over</h1><h3 class='gameover2'>Better luck next time!</h3>";
+    console.log("adding "+player.score+ " to " + player.finalScore);
+    player.finalScore.push(player.score);
+    gameField.innerHTML = "<h1 class='gameover'>Game Over</h1><h3 class='gameover2'>Better luck next time!</h3><h4>Current score rundown is:</h4>";
+    for (var i = 0; i < player.name.length; i++) {
+      var playerScore = document.createElement('p');
+      console.log("final scores are " + player.finalScore);
+      playerScore.innerHTML = player.name[i] + " : " + player.finalScore[i] + " points";
+      gameField.appendChild(playerScore);
+    }
   },
   youWinMessage: function() {
-    // console.log("running youWinMessage");
+    console.log("running youWinMessage");
     this.gameInProgress = false;
-    gameField.innerHTML = "<h1 class='youwin'>Hooray!</h1><h3 class='youwin2'>You are an excellent typer!</h3><h4 class='youwin3'>(You'll make a good secretary)</h4>";
+    console.log("adding "+player.score+ " to " + player.finalScore);
+    player.finalScore.push(player.score);
+    gameField.innerHTML = "<h1 class='youwin'>Hooray!</h1><h3 class='youwin2'>You are an excellent typer!</h3><h4 class='youwin3'>(You'll make a good secretary)</h4><h4>Current score rundown is:</h4>";
+    for (var i = 0; i < player.name.length; i++) {
+      var playerScore = document.createElement('p');
+      console.log("final scores are " + player.finalScore);
+      playerScore.innerHTML = player.name[i] + " : " + player.finalScore[i] + " points";
+      gameField.appendChild(playerScore);
+    }
   },
   resetGame: function() {
-    // console.log("running resetGame");
     var that = gameMechanics;
     that.currentWord = null;
     that.movingSpeed = 50;
@@ -177,10 +192,12 @@ var gameMechanics = {
     that.gameOver = false;
     that.youWin = false;
     gameField.innerHTML = '';
-  }
+  },
 };
 
 var player = {
+  name: [],
+  finalScore: [],
   typedWord: null,
   score: 0,
   youGotIt: false,
@@ -199,20 +216,13 @@ var player = {
     this.updateScoreNode();
   },
   updateScoreNode: function() {
-    // console.log("running updateScoreNode");
     if (this.score >= 0) {
       scoreDisplay.innerHTML = "<p style=font-family:'Righteous',cursive>" + this.score + " points </p>";
-    //   if (this.youGotIt === false) {
-    //     scoreDisplay.style.color = "red";
-    // } else {
-    //     scoreDisplay.style.color = "green";
-    //   }
     } else {
       scoreDisplay.innerHTML = "<p style=color:purple>YOU LOST :(</p>";
     }
   },
   resetPlayer: function() {
-    // console.log("running resetPlayer");
     var that = player;
     that.youGotIt = false;
     that.score = 10;
@@ -220,55 +230,72 @@ var player = {
   }
 }
 
-window.onload = function() {
+var initiateGreeting = function() {
   console.log("appending greeting");
-  var gameGreeting = document.createElement('div');
   gameGreeting.classList.add("greeting");
   gameGreeting.style.opacity = 0;
   gameBody.appendChild(gameGreeting);
   window.getComputedStyle(gameGreeting).opacity;
   gameGreeting.style.opacity = 0.9;
   // transition opacity code learned from here: https://timtaubert.de/blog/2012/09/css-transitions-for-dynamically-created-dom-elements/
-  gameGreeting.innerHTML = "<p>Welcome to the <strong>FALLING WORDS</strong> typing game!</p><p>Are you a good typer? <br> Or do you constantly mistype or look at the keyboard when you type?</p><p> Let's test your typing skills!</h2><h3>Here are the rules of the game:</p><ul><li>You'll start with a 'gift' of 10 free points</li><li>You gain 5 points for every word you type correctly</li><li>You lose 5 points for every word typed incorrectly</li><li>You also lose 5 points if the word falls to the bottom before you can type it</li><li>To win, you need to get " + gameMechanics.winningScore + " points</li><li>If your score goes below 0 points, you lose - game over!</li><li>Watch out, the words may be changing their speed!</li></ul><button class='confirm' type='button' name='button'>OK</button>";
+  gameGreeting.innerHTML = "<p>Welcome to the <strong>FALLING WORDS</strong> typing game!</p><p>Are you a good typer? <br> Or do you constantly mistype or look at the keyboard when you type?</p><p> Let's test your typing skills!</h2><h3>Here are the rules of the game:</p><ul><li>You'll start with a 'gift' of 10 free points</li><li>You gain 5 points for every word you type correctly</li><li>You lose 5 points for every word typed incorrectly</li><li>You also lose 5 points if the word falls to the bottom before you can type it</li><li>To win, you need to get " + gameMechanics.winningScore + " points</li><li>If your score goes below 0 points, you lose - game over!</li><li>Watch out, the words may be changing their speed!</li><li>Feel free to hit the STOP button at any point to stop playing</li></ul><input class='userName' placeholder='Your Name' style=margin-right:20px><button class='confirm' type='button' name='button'>OK</button>";
+  var nameForm = document.querySelector('.userName');
   var okButton = document.querySelector('.confirm');
+  nameForm.focus();
   okButton.style.width = 50 + "px";
+  nameForm.addEventListener("keypress", function() {
+    var key = event.which;
+    if (key === 13) {
+      submittedNameNode.innerText = nameForm.value.toUpperCase();
+      placeForName.appendChild(submittedNameNode);
+      player.name.push(nameForm.value.toUpperCase());
+      gameGreeting.remove();
+      gameMechanics.generateCurrentWord();
+      userInputBox.focus();
+  }});
   okButton.addEventListener("click", function() {
+    submittedNameNode.innerText = nameForm.value.toUpperCase();
+    placeForName.appendChild(submittedNameNode);
+    player.name.push(nameForm.value.toUpperCase());
     gameGreeting.remove();
-    startButton.addEventListener('click', function(event) {
-        if (gameMechanics.gameInProgress === false) {
-          gameMechanics.gameInProgress = true;
-          gameMechanics.randomizeWords();
-          gameMechanics.resetGame();
-          player.resetPlayer();
-          gameMechanics.generateCurrentWord();
-          userInputBox.focus();
-        } else {
-          console.log("Game is in progress");
-        }
-    });
-
-    userInputBox.addEventListener("keypress", function(event) {
-      var key = event.which;
-      if (key === 13) {
-        // console.log("typing is workin");
-        // console.log(this.value);
-        player.typedWord = this.value;
-        // console.log("user typed " + player.typedWord);
-        gameMechanics.checkresult();
-        var that = this;
-        setTimeout(function () {
-          that.value = "";
-          userInputBox.focus();
-        }, 100);
-    }
-    });
-
-    stopButton.addEventListener('click', function(event) {
-      // console.log("Game Stopped");
-        gameMechanics.gameInProgress = false;
-        gameMechanics.gameOver = true;
-        gameMechanics.gameOverMessage();
-    });
-
+    gameMechanics.generateCurrentWord();
+    userInputBox.focus();
   })
 }
+
+startButton.addEventListener('click', function(event) {
+    if (gameMechanics.gameInProgress === false) {
+      initiateGreeting();
+      submittedNameNode.innerText = '';
+      gameMechanics.gameInProgress = true;
+      gameMechanics.randomizeWords();
+      gameMechanics.resetGame();
+      player.resetPlayer();
+    } else {
+      console.log("Game is in progress");
+    }
+});
+
+userInputBox.addEventListener("keypress", function(event) {
+  var key = event.which;
+  if (key === 13) {
+    // console.log("typing is workin");
+    // console.log(this.value);
+    player.typedWord = this.value;
+    // console.log("user typed " + player.typedWord);
+    gameMechanics.checkresult();
+    var that = this;
+    setTimeout(function () {
+      that.value = "";
+      userInputBox.focus();
+    }, 100);
+}
+});
+
+stopButton.addEventListener('click', function(event) {
+  // console.log("Game Stopped");
+  console.log("stop button is pushed");
+    gameMechanics.gameInProgress = false;
+    gameMechanics.gameOver = true;
+    // gameMechanics.gameOverMessage();
+});

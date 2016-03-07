@@ -1,20 +1,34 @@
-Yulia Shea
+Hello, this is a README file for the Falling Words game, my first web programming project.
 
-Improvements:
-- add animation to words: exploding, changing colors, blinking etc.
-  - make the word explode when it hits the ground
-- add word visual for when the answer is correct and fix flickering
+Want to test or improve your typing skills? Falling Words game is an entertaining way to do just that.
 
-- greeting pop-up
-- add ability to create additional players
-- add sounds
+# This game:
+- is available in your browser
+- enables to track score for several players during one session
+- incorporates logic for winning and losing
+- has separate HTML/CSS/JS files
+- was built with KISS and DRY concepts in min-width
+- uses JS for DOM manipulation
+- is a working game deployed online for everyone to see
+- uses semantic markup for HTML and CSS
+
+
+
+# Further Improvements to Be Done:
+- timer to stop the game at a point in time
+- sounds
+- additional animation:
+  - words exploding, changing colors, blinking etc.
+  - add word visual for when the answer is correct (and fix flickering)
 - utilize random word generation API
 - make the words fall simultaneously
-- convert to a math game
+- introduce different levels of playing, including separate levels for training different fingers/hands / different keyboard areas
+- add an option to play a math game
 
 
-DONE
-
+# DONE
+- added ability to track scores for multiple players [x]
+- greeting pop-up [x]
 - start button doesn't work on the second try [x]
 - words go over the field [x]
 - let user make couple of mistakes in the beginning [x]
